@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-3">Edit Table</h2>
+
+<form method="post"
+      action="{{ url_for('edit_table', table_id=table.id) }}"
+      class="card p-3">
+    <div class="mb-3">
+        <label class="form-label">Table Number</label>
+        <input type="text" name="table_number" class="form-control"
+               value="{{ table.table_number }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Capacity</label>
+        <input type="number" name="capacity" class="form-control"
+               value="{{ table.capacity }}" min="1" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-select">
+            <option value="available" {% if table.status == 'available' %}selected{% endif %}>Available</option>
+            <option value="occupied" {% if table.status == 'occupied' %}selected{% endif %}>Occupied</option>
+            <option value="reserved" {% if table.status == 'reserved' %}selected{% endif %}>Reserved</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="{{ url_for('tables_list') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

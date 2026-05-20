@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-3">Create Order</h2>
+
+<form method="post" action="{{ url_for('add_order') }}" class="card p-3">
+
+    <div class="mb-3">
+        <label class="form-label">Table</label>
+        <select name="table_id" class="form-select" required>
+            <option value="">-- Select Table --</option>
+            {% for table in tables %}
+                <option value="{{ table.id }}">
+                    {{ table.table_number }} ({{ table.status }}, capacity {{ table.capacity }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Customer (optional)</label>
+        <select name="customer_id" class="form-select">
+            <option value="">Walk-in (no record)</option>
+            {% for customer in customers %}
+                <option value="{{ customer.id }}">{{ customer.name }} - {{ customer.phone }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <h5>Order Items</h5>
+    <table class="table" id="items-table">
+        <thead>
+        <tr>
+            <th>Menu Item</th>
+            <th style="width: 120px;">Quantity</th>
+            <th style="width: 80px;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <select name="item_id[]" class="form-select">
+                    <option value="">-- Select Item --</option>
+                    {% for item in menu_items %}
+                        <option value="{{ item.id }}">
+                            {{ item.name }} ({{ item.category }}) - ₹ {{ "%.2f"|format(item.price) }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <input type="number" name="quantity[]" class="form-control" value="1" min="1">
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">X</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-sm btn-secondary mb-3" onclick="addRow()">Add Another Item</button>
+
+    <div>
+        <button type="submit" class="btn btn-success">Create Order</button>
+        <a href="{{ url_for('orders_list') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+<script>
+    function addRow() {
+        const table = document.getElementById('items-table').getElementsByTagName('tbody')[0];
+        const firstRow = table.rows[0];
+        const newRow = firstRow.cloneNode(true);
+
+        // Clear selected item and quantity
+        newRow.querySelector('select').selectedIndex = 0;
+        newRow.querySelector('input[name="quantity[]"]').value = 1;
+
+        table.appendChild(newRow);
+    }
+
+    function removeRow(button) {
+        const row = button.closest('tr');
+        const table = row.parentNode;
+        if (table.rows.length > 1) {
+            table.removeChild(row);
+        } else {
+            alert("At least one item is required.");
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card border-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Tables</h5>
+                <p class="display-6">{{ total_tables }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-success">
+            <div class="card-body">
+                <h5 class="card-title">Available Tables</h5>
+                <p class="display-6">{{ available_tables }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-danger">
+            <div class="card-body">
+                <h5 class="card-title">Occupied Tables</h5>
+                <p class="display-6">{{ occupied_tables }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-warning">
+            <div class="card-body">
+                <h5 class="card-title">Menu Items</h5>
+                <p class="display-6">{{ total_menu_items }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-3">
+    <div class="col-md-3">
+        <div class="card border-info">
+            <div class="card-body">
+                <h5 class="card-title">Open Orders</h5>
+                <p class="display-6">{{ open_orders }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

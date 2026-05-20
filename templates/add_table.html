@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-3">Add Table</h2>
+
+<form method="post" action="{{ url_for('add_table') }}" class="card p-3">
+    <div class="mb-3">
+        <label class="form-label">Table Number</label>
+        <input type="text" name="table_number" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Capacity</label>
+        <input type="number" name="capacity" class="form-control" min="1" required>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{{ url_for('tables_list') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
